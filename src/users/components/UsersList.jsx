@@ -5,7 +5,10 @@ const UsersList = ({items}) => {
     <div>
         {items.length === 0 ? (
             <div className="flex justify-center items-center text-center">
-                No Users Found.
+                <h1>
+                    No Users Found.
+                </h1>
+               
             </div>
         ) : (
             <div>
