@@ -1,6 +1,20 @@
+import UsersList from "../components/UsersList"
+
 const Users = () => {
+    const USERS = [
+        {
+            id : "u1" , 
+            name : "john" , 
+            image : "https://housing.com/news/wp-content/uploads/2022/11/Famous-tourist-places-in-India-state-compressed.jpg" , 
+            places : 3 ,
+        }
+    ]
   return (
-    <h1>Users</h1>
+    <div>
+        <UsersList 
+            items={USERS}
+        />
+    </div>
   )
 }
 
