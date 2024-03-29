@@ -1,7 +1,7 @@
-const NewPlace = () => {
-  return (
-    <h1>NewPlace</h1>
-  )
-}
+import React from 'react';
 
-export default NewPlace
+const NewPlace = () => {
+  return <h2>NewPlace Works!</h2>
+};
+
+export default NewPlace;
