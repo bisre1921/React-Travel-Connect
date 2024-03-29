@@ -1,10 +1,14 @@
 import "./SideDrawer.css";
+import {CSSTransition} from "react-transition-group";
 
 const SideDrawer = (props) => {
   return (
-    <aside className="side-drawer">
-        {props.children}
-    </aside>
+    <CSSTransition in={props.show} timeout={200} classNames="slide-in-lef" mountOnEnter unmountOnExit>
+        <aside className="side-drawer" onClick={props.onClick}>
+            {props.children}
+        </aside>
+    </CSSTransition>
+    
   )
 }
 
