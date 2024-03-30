@@ -2,6 +2,7 @@ import {BrowserRouter as Router , Routes , Route , Navigate} from "react-router-
 import Users from "./users/pages/Users"
 import NewPlace from "./places/pages/NewPlace"
 import MainNavigation from "./shared/components/Navigation/MainNavigation"
+import UserPlaces from "./places/pages/UserPlaces"
 function App() {
 
   return (
@@ -12,6 +13,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Users />} />
             <Route path="/places/new" element={<NewPlace />} />
+            <Route path="/:userId/places" element={<UserPlaces />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </main>
