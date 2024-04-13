@@ -1,5 +1,5 @@
 import React from 'react';
-import "./NewPlace.css";
+import "./placeForm.css";
 import Input from '../../shared/components/FormElements/Input';
 import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/Util/Validators';
 import { useCallback } from 'react';
