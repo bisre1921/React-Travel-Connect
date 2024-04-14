@@ -23,7 +23,7 @@ const dummyPlaces =[
     } , 
     {
         id: "p2" , 
-        title : "empire state building" , 
+        title : "emp. state building" , 
         description : "the best building in the world" , 
         imageUrl : "https://media.timeout.com/images/101705309/image.jpg" , 
         address : "20 W 34th st, New York , NY 10001" , 
@@ -57,18 +57,20 @@ const UpdatePlace = () => {
     } , false);
 
     useEffect(() => {
-        setFormData(
-            {
-                title : {
-                    value : identifiedPlace.title , 
-                    isValid : true
-                } , 
-                description : {
-                    value : identifiedPlace.description , 
-                    isValid : true
-                }
-            }
-        )
+        if(identifiedPlace) {
+            setFormData(
+                {
+                    title : {
+                        value : identifiedPlace.title , 
+                        isValid : true
+                    } , 
+                    description : {
+                        value : identifiedPlace.description , 
+                        isValid : true
+                    }
+                } , true
+            )
+        }
         setIsLoading(false);
     } , [setFormData , identifiedPlace])
 
