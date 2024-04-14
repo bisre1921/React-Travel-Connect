@@ -4,6 +4,8 @@ import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../shared/Util/Valida
 import Button from "../../shared/components/FormElements/Button";
 import "./placeForm.css";
 import {useForm} from "../../shared/hooks/Form-Hook";
+import { useEffect } from "react";
+import { useState } from "react";
 
 
 const dummyPlaces =[ 
@@ -37,21 +39,40 @@ const dummyPlaces =[
 
 
 const UpdatePlace = () => {
-    
+    const [isLoading , setIsLoading] = useState(true);
     const placeId = useParams().placeId
     const identifiedPlace = dummyPlaces.find(p => p.id === placeId);
 
-    const [formState , inputHandler] = useForm({
+
+
+    const [formState , inputHandler , setFormData] = useForm({
         title : {
-            value : identifiedPlace.title , 
-            isValid : true
+            value : "" , 
+            isValid : false
         } , 
         description : {
-            value : identifiedPlace.description , 
-            isValid : true
+            value : "" , 
+            isValid : false
         }
-    } , true);
+    } , false);
 
+    useEffect(() => {
+        setFormData(
+            {
+                title : {
+                    value : identifiedPlace.title , 
+                    isValid : true
+                } , 
+                description : {
+                    value : identifiedPlace.description , 
+                    isValid : true
+                }
+            }
+        )
+        setIsLoading(false);
+    } , [setFormData , identifiedPlace])
+
+    
     const placeUpdateSubmitHandler = (event) => {
         event.preventDefault();
         console.log(formState.inputs);
@@ -61,6 +82,14 @@ const UpdatePlace = () => {
         return (
             <div className="center">
                 <h2>Could not find a place</h2>
+            </div>
+        )
+    };
+
+    if(isLoading) {
+        return (
+            <div className="center">
+                <h2>Loading...</h2>
             </div>
         )
     }
