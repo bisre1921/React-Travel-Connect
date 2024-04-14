@@ -68,7 +68,7 @@ const UpdatePlace = () => {
                         value : identifiedPlace.description , 
                         isValid : true
                     }
-                } , true
+                } , true 
             )
         }
         setIsLoading(false);
