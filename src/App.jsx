@@ -5,7 +5,7 @@ import MainNavigation from "./shared/components/Navigation/MainNavigation"
 import UserPlaces from "./places/pages/UserPlaces"
 import UpdatePlace from "./places/pages/UpdatePlace"
 import Auth from "./users/pages/Auth"
-import { AuthContext } from "./shared/Context/AuthContext"
+import  AuthContext  from "./shared/Context/AuthContext"
 import { useState } from "react"
 import { useCallback } from "react"
 function App() {
