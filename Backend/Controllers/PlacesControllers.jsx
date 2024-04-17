@@ -1,4 +1,6 @@
-const HttpError = require("../Models/HttpError.jsx"); 
+const HttpError = require("../Models/HttpError.jsx");
+const { v4: uuidv4 } = require('uuid');
+
 
 const dummyPlaces = [
     {
@@ -23,7 +25,7 @@ const getPlaceById = (req, res, next) => {
     });
   
     if(!place) {
-      throw new HttpErrorError("Could not find a place for the provided id." , 404);
+      throw new HttpError("Could not find a place for the provided id." , 404);
       } else {
       res.json({place : place});
     }
@@ -38,12 +40,29 @@ const getPlaceByUserId =  (req , res , next) => {
     });
 
     if(!place) {
-        next(new HttpErrorError("Could not find a place for the provided user id." , 404));
+        next(new HttpError("Could not find a place for the provided user id." , 404));
       } else {
         res.json({place});
       }
     
 };
 
+const createPlace = (req , res , next) => {
+    const {title , description , coordinates , address , creator} = req.body;
+    const createdPlace = {
+        id : uuidv4() ,
+        title , 
+        description , 
+        location : coordinates , 
+        address , 
+        creator
+    }; 
+    dummyPlaces.push(createdPlace);   
+
+    res.status(201).json({place : createdPlace});
+};
+
+
 exports.getPlaceById = getPlaceById;
 exports.getPlaceByUserId = getPlaceByUserId;
+exports.createPlace = createPlace;
