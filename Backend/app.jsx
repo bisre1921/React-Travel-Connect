@@ -2,12 +2,18 @@ const express = require("express");
 const bodyParser = require("body-parser");
  
 const placesRoutes = require("./Routes/PlacesRoutes.jsx");
+const HttpError = require("./Models/HttpError.jsx");
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json()); 
 
 app.use("/api/places" , placesRoutes);
+
+app.use((req , res , next) => {
+    const error = new HttpError("Could not find this page" , 404);
+    throw error;
+})
 
 app.use((error , req , res , next) => {
     if(res.headerSent) {
