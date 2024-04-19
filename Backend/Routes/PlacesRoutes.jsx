@@ -18,7 +18,14 @@ router.post(
         PlacesControllers.createPlace
     );
 
-router.patch("/:pid" , PlacesControllers.updatePlace);
+router.patch(
+        "/:pid" , 
+        [
+            check("title").not().isEmpty() , 
+            check("description").isLength({min : 5}) ,
+        ] ,
+        PlacesControllers.updatePlace ,
+    );
 
 router.delete("/:pid" , PlacesControllers.deletePlace);
 
