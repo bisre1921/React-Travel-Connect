@@ -21,16 +21,22 @@ let dummyPlaces = [
 
 
 
-const getPlaceById = (req, res, next) => {
+const getPlaceById = async (req, res, next) => {
     const placeId = req.params.pid;
-    const place = dummyPlaces.find(p => {
-      return p.id === placeId
-    });
+    let place;
+    try {
+        place = await Place.findById(placeId);
+    } catch(err) {
+        const error = new HttpError("Something went wrong, Could not find a place" , 500);
+        return next(error);
+    }
+    
   
     if(!place) {
-      throw new HttpError("Could not find a place for the provided id." , 404);
+      const error = new HttpError("Could not find a place for the provided id." , 404);
+      return next(error);
       } else {
-      res.json({place : place});
+      res.json({place : place.toObject({getters: true})});
     }
     
   };
