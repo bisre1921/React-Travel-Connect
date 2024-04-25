@@ -22,7 +22,7 @@ const getUsers = async (req, res , next) => {
     };
     
 
-    res.json({users : dummyUsers});
+    res.json({users : users.map(user => user.toObject({getters : true}))});
 };
 
 const signup = async (req, res , next) => {
@@ -33,7 +33,7 @@ const signup = async (req, res , next) => {
         ) 
     };
  
-   const {name , email , password , places} = req.body;
+   const {name , email , password } = req.body;
     
    let existingUser;
    try {
@@ -53,7 +53,7 @@ const signup = async (req, res , next) => {
         email, 
         image : "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg" ,
         password , 
-        places
+        places : []
     })
 
     try {
