@@ -27,7 +27,7 @@ app.use((error , req , res , next) => {
 });
 
 mongoose
-    .connect("mongodb+srv://bisrat:bisrat1234@cluster0.s8olojo.mongodb.net/places?retryWrites=true&w=majority&appName=Cluster0")
+    .connect("mongodb+srv://bisrat:bisrat1234@cluster0.s8olojo.mongodb.net/mern?retryWrites=true&w=majority&appName=Cluster0")
     .then( () => {
         app.listen(5000);
     })
