@@ -8,19 +8,7 @@ const User = require("../Models/user.jsx");
 const mongoose = require("mongoose");
 
 
-let dummyPlaces = [
-    {
-        id : "p1" , 
-        title : "Empire state building" ,
-        description : "one of the most famous sky scrapers in the world" , 
-        location : {
-            lat : 40.7484474 , 
-            lng : -73.9871516
-        } ,
-        address : "20 w 34th st , new york , ny 10001" , 
-        creator : "u1" ,
-    }
-]
+
 
 
 
