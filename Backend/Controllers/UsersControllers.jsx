@@ -71,6 +71,7 @@ const login = async (req, res , next) => {
 
     if(!existingUser || existingUser.password !== password) {
         const error = new HttpError("Invalid credentials, Could not log you in" , 401);
+        return next(error);
     }
     
     res.json({message : "Logged in"});
