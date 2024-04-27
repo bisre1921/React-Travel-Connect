@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Button from "../../shared/components/FormElements/Button";
 import Input from "../../shared/components/FormElements/Input";
 import Card from "../../shared/components/UIElements/Card";
@@ -8,6 +8,7 @@ import "./Auth.css";
 import { useContext } from "react";
 import AuthContext from "../../shared/Context/AuthContext";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 
 const Auth = () => {
     const auth = useContext(AuthContext);
@@ -46,11 +47,14 @@ const Auth = () => {
                         })
                 });
                 const responseData = await response.json();
+                if(!response.ok) {
+                    throw new Error(responseData.message);
+                };
+
                 console.log(responseData);
                 auth.login();
                 setIsLoading(false);
             } catch (error) {
-                console.log(error);
                 setIsLoading(false);
                 setError(error.message || "Something went wrong, Please try again");
             }
@@ -78,57 +82,64 @@ const Auth = () => {
         }
         setIsLoginMode(prevState => !prevState);
     }
+    
+    const errorHandler = () => {
+        setError(null);
+    };
 
     return (
-        <Card className="authentication">
-            {isLoading && (
-                <LoadingSpinner asOverlay />
-            )}
-            <h2>
-                Login required
-            </h2>
-            <hr />
-            <form onSubmit={authSubmitHandler}>
-                {!isLoginMode && (
+        <React.Fragment>
+            <ErrorModal error={error} onClear={errorHandler} />
+            <Card className="authentication">
+                {isLoading && (
+                    <LoadingSpinner asOverlay />
+                )}
+                <h2>
+                    Login required
+                </h2>
+                <hr />
+                <form onSubmit={authSubmitHandler}>
+                    {!isLoginMode && (
+                        <Input 
+                            id="name" 
+                            element="input" 
+                            type="text" 
+                            label="Your name" 
+                            validators={[VALIDATOR_REQUIRE()]} 
+                            errorText="please enter a name." 
+                            onInput={inputHandler} 
+                        />
+                    )}
                     <Input 
-                        id="name" 
+                        id="email" 
                         element="input" 
-                        type="text" 
-                        label="Your name" 
-                        validators={[VALIDATOR_REQUIRE()]} 
-                        errorText="please enter a name." 
+                        type="email" 
+                        label="E-Mail" 
+                        validators={[VALIDATOR_EMAIL()]} 
+                        errorText="please enter a valid email address" 
                         onInput={inputHandler} 
                     />
-                )}
-                <Input 
-                    id="email" 
-                    element="input" 
-                    type="email" 
-                    label="E-Mail" 
-                    validators={[VALIDATOR_EMAIL()]} 
-                    errorText="please enter a valid email address" 
-                    onInput={inputHandler} 
-                />
-                <Input 
-                    id="password" 
-                    element="input" 
-                    type="password" 
-                    label="Password" 
-                    validators={[VALIDATOR_MINLENGTH(8)]} 
-                    errorText="please enter a valid password , at least 8 characters" 
-                    onInput={inputHandler} 
-                />
-                <Button type="submit" disabled={!formState.isValid}>
-                    {isLoginMode ? "LOGIN" : "SIGN-UP"}
+                    <Input 
+                        id="password" 
+                        element="input" 
+                        type="password" 
+                        label="Password" 
+                        validators={[VALIDATOR_MINLENGTH(8)]} 
+                        errorText="please enter a valid password , at least 8 characters" 
+                        onInput={inputHandler} 
+                    />
+                    <Button type="submit" disabled={!formState.isValid}>
+                        {isLoginMode ? "LOGIN" : "SIGN-UP"}
+                    </Button>
+                </form>
+                <Button 
+                    inverse
+                    onClick={switchModeHandler}
+                >
+                Switch to {isLoginMode ? "SIGN-UP" : "LOGIN"}
                 </Button>
-            </form>
-            <Button 
-                inverse
-                onClick={switchModeHandler}
-            >
-               Switch to {isLoginMode ? "SIGN-UP" : "LOGIN"}
-            </Button>
-            </Card>
+                </Card>
+            </React.Fragment>
     )
 };
 export default Auth;
