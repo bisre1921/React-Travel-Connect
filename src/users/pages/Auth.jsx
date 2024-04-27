@@ -7,10 +7,13 @@ import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../s
 import "./Auth.css";
 import { useContext } from "react";
 import AuthContext from "../../shared/Context/AuthContext";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const Auth = () => {
     const auth = useContext(AuthContext);
     const [isLoginMode , setIsLoginMode] = useState(true);
+    const [isLoading , setIsLoading] = useState(false);
+    const [error , setError] = useState();
 
     const [formState , inputHandler , setFormData] = useForm({
         email : {
@@ -30,27 +33,32 @@ const Auth = () => {
 
         } else {
             try {
+                setIsLoading(true);
                 const response = await fetch("http://localhost:5000/api/users/signup"  ,{
                 method: "POST" , 
                 headers: {
                     "Content-Type" : "application/json"
                 } , 
                 body: JSON.stringify({
-                    name : formState.inputs.name.value , 
-                    email : formState.inputs.email.value , 
-                    password : formState.inputs.password.value
-                })
-            });
-            const responseData = await response.json();
-            console.log(responseData);
+                        name : formState.inputs.name.value , 
+                        email : formState.inputs.email.value , 
+                        password : formState.inputs.password.value
+                        })
+                });
+                const responseData = await response.json();
+                console.log(responseData);
+                auth.login();
+                setIsLoading(false);
             } catch (error) {
                 console.log(error);
+                setIsLoading(false);
+                setError(error.message || "Something went wrong, Please try again");
             }
             
              
         }
         
-        auth.login();
+       
     };
 
     const switchModeHandler = () => {
@@ -73,6 +81,9 @@ const Auth = () => {
 
     return (
         <Card className="authentication">
+            {isLoading && (
+                <LoadingSpinner asOverlay />
+            )}
             <h2>
                 Login required
             </h2>
