@@ -14,8 +14,6 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 const Auth = () => {
     const auth = useContext(AuthContext);
     const [isLoginMode , setIsLoginMode] = useState(true);
-    // const [isLoading , setIsLoading] = useState(false);
-    // const [error , setError] = useState();
     const {isLoading , error , sendRequest , clearError} = useHttpClient();
 
     const [formState , inputHandler , setFormData] = useForm({
@@ -31,7 +29,6 @@ const Auth = () => {
 
     const authSubmitHandler = async (event) => {
         event.preventDefault();
-        // setIsLoading(true);
         if(isLoginMode) {
             try {
                 await sendRequest(
@@ -50,14 +47,6 @@ const Auth = () => {
             } catch (error) {
                 
             }
-               
-
-                // const responseData = await response.json();
-                // if(!response.ok) {
-                //     throw new Error(responseData.message);
-                // };
-
-                // setIsLoading(false);
                 
             
         } else {
@@ -77,17 +66,8 @@ const Auth = () => {
                 );
 
 
-                
-                // const responseData = await response.json();
-                // if(!response.ok) {
-                //     throw new Error(responseData.message);
-                // };
-
-                // setIsLoading(false);
                 auth.login();
             } catch (error) {
-                // setIsLoading(false);
-                // setError(error.message || "Something went wrong, Please try again");
             }
             
              
@@ -114,10 +94,6 @@ const Auth = () => {
         setIsLoginMode(prevState => !prevState);
     }
     
-    // const errorHandler = () => {
-    //     clearError();
-    // };
-
     return (
         <React.Fragment>
             <ErrorModal error={error} onClear={clearError} />
