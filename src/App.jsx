@@ -11,13 +11,16 @@ import { useCallback } from "react"
 function App() {
 
   const [isLoggedIn , setIsLoading] = useState(false);
+  const [userId , setUserId] = useState(false);
 
-  const login = useCallback(() => {
+  const login = useCallback((uid) => {
     setIsLoading(true);
+    setUserId(uid);
   } , []);
 
   const logout = useCallback(() => {
     setIsLoading(false);
+    setUserId(null);
   } , []);
 
   let routes;
@@ -46,6 +49,7 @@ function App() {
     <>
     <AuthContext.Provider value={{
       isLoggedIn : isLoggedIn , 
+      userId : userId ,
       login : login , 
       logout : logout
     }}>
