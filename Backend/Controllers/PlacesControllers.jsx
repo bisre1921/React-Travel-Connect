@@ -44,11 +44,13 @@ const getPlacesByUserId = async (req , res , next) => {
         return next(error);
     };
     
-    if(!userWithPlaces || userWithPlaces.length === 0) {
-        next(new HttpError("Could not find places for the provided user id." , 404));
-      } else {
-        res.json({places: userWithPlaces.map(place => place.toObject({getters: true}))});
+    if (!userWithPlaces || userWithPlaces.places.length === 0) {
+        return next(
+          new HttpError('Could not find places for the provided user id.', 404)
+        );
       }
+    
+      res.json({ places: userWithPlaces.places.map(place => place.toObject({ getters: true })) });
     
 };
 
