@@ -12,32 +12,6 @@ import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import AuthContext from "../../shared/Context/AuthContext";
 
 
-// const dummyPlaces =[ 
-//     {
-//         id: "p1" , 
-//         title : "empire state building" , 
-//         description : "the best building in the world" , 
-//         imageUrl : "https://media.timeout.com/images/101705309/image.jpg" , 
-//         address : "20 W 34th st, New York , NY 10001" , 
-//         location : {
-//             lat : 40.7484405 , 
-//             lng : -73.9878584
-//         } , 
-//         creator : "u1"
-//     } , 
-//     {
-//         id: "p2" , 
-//         title : "emp. state building" , 
-//         description : "the best building in the world" , 
-//         imageUrl : "https://media.timeout.com/images/101705309/image.jpg" , 
-//         address : "20 W 34th st, New York , NY 10001" , 
-//         location : {
-//             lat : 40.7484405 , 
-//             lng : -73.9878584
-//         } , 
-//         creator : "u2"
-//     } ,
-// ]
 
 
 
@@ -46,10 +20,8 @@ const UpdatePlace = () => {
     const auth = useContext(AuthContext);
     const {isLoading , error , sendRequest , clearError} = useHttpClient();
     const [loadedPlace , setLoadedPlaces] = useState();
-    //const [isLoading , setIsLoading] = useState(true);
     const placeId = useParams().placeId
     const navigate = useNavigate();
-    //const identifiedPlace = dummyPlaces.find(p => p.id === placeId);
 
     const [formState, inputHandler, setFormData] = useForm(
         {
@@ -92,39 +64,10 @@ const UpdatePlace = () => {
     } , [sendRequest , placeId , setFormData])
 
 
-    // const [formState , inputHandler , setFormData] = useForm({
-    //     title : {
-    //         value : "" , 
-    //         isValid : false
-    //     } , 
-    //     description : {
-    //         value : "" , 
-    //         isValid : false
-    //     }
-    // } , false);
-
-    // useEffect(() => {
-    //     if(identifiedPlace) {
-    //         setFormData(
-    //             {
-    //                 title : {
-    //                     value : identifiedPlace.title , 
-    //                     isValid : true
-    //                 } , 
-    //                 description : {
-    //                     value : identifiedPlace.description , 
-    //                     isValid : true
-    //                 }
-    //             } , true 
-    //         )
-    //     }
-    //     setIsLoading(false);
-    // } , [setFormData , identifiedPlace])
 
     
     const placeUpdateSubmitHandler = async (event) => {
         event.preventDefault();
-        //console.log(formState.inputs);
         try {
             await sendRequest(
                 `http://localhost:5000/api/places/${placeId}` ,
