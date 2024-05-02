@@ -1,3 +1,4 @@
+const fs = require("fs");
 const HttpError = require("../Models/HttpError.jsx");
 const { v4: uuidv4 } = require('uuid');
 const {validationResult} = require("express-validator");
@@ -160,6 +161,8 @@ const deletePlace = async (req , res , next) => {
         return next(error);
     }
 
+    const imagePath = place.image;
+
     try {
         const sess = await mongoose.startSession();
         sess.startTransaction();
@@ -174,8 +177,10 @@ const deletePlace = async (req , res , next) => {
         );
         return next(error);
       }
-    
-
+      
+      fs.unlink(imagePath , (error) => {
+        console.log(error)
+      });
 
     res.status(200).json({message : "Deleted place"});
 }
