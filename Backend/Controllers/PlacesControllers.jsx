@@ -9,9 +9,6 @@ const mongoose = require("mongoose");
 
 
 
-
-
-
 const getPlaceById = async (req, res, next) => {
     const placeId = req.params.pid;
     let place;
@@ -77,7 +74,7 @@ const createPlace = async (req, res, next) => {
         description , 
         address , 
         location : coordinates , 
-        image : "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg" ,
+        image : req.file.path ,
         creator
     });
 

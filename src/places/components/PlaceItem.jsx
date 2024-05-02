@@ -78,7 +78,7 @@ const PlaceItem = (props) => {
             <Card className="place-item__content">
                 <div className="place-item__image">
                     <img 
-                        src={props.image}
+                        src={`http://localhost:5000/${props.image}`}
                         alt={props.title} 
                     />
                 </div>
