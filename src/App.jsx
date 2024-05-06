@@ -6,13 +6,14 @@ import UserPlaces from "./places/pages/UserPlaces"
 import UpdatePlace from "./places/pages/UpdatePlace"
 import Auth from "./users/pages/Auth"
 import  AuthContext  from "./shared/Context/AuthContext"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useCallback } from "react"
 function App() {
 
   const [token , setToken] = useState(false);
   const [userId , setUserId] = useState(false);
 
+ 
   const login = useCallback((uid , token) => {
     setToken(token);
     setUserId(uid);
@@ -23,13 +24,22 @@ function App() {
         token : token
       })
     );
-    
+
   } , []);
 
   const logout = useCallback(() => {
     setToken(null);
     setUserId(null);
+    localStorage.removeItem("userData");
   } , []);
+
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem("userData"));
+    if(storedData && storedData.token) {
+      login(storedData.userId , storedData.token);
+    }
+  } , [login]);
+
 
   let routes;
   if(token) {
